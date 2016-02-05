@@ -3,7 +3,7 @@
 Plugin Name: ACT Metaboxes
 Plugin URI: http://cgd.io/
 Description:  Adds metaboxes from other post types to ACT templates. 
-Version: 1.0.0
+Version: 1.1.0
 Author: CGD Inc.
 Author URI: http://cgd.io
 
