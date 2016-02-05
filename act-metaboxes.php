@@ -35,6 +35,12 @@ class ACT_Metaboxes {
 		
 		// Add metaboxes 
 		add_action('add_meta_boxes' . $AdvancedContentTemplates->post_type, array($this, 'glue_act_metaboxes'), 1000 );
+		
+		
+		/**
+		 * Esoteric compatibility patches 
+		 */
+		$this->compatibility_magic();
 	}
 	
 	function glue_act_metaboxes() {
@@ -56,6 +62,24 @@ class ACT_Metaboxes {
 					unset($wp_meta_boxes[$act_screen->id][$priority][$position]['act_side_car']);
 				}
 			}
+		}
+	}
+	
+	function compatibility_magic() {
+		$current_theme = wp_get_theme();
+		
+		
+		// Studiofolio Theme
+		if ( $current_theme->get('Name') == 'Studiofolio' ) {
+			add_action('admin_init', array($this, 'studiofolio_fix') , 0); 
+		}
+	}
+	
+	function studiofolio_fix() {
+		global $all_mb, $AdvancedContentTemplates;
+		
+		if ( isset($all_mb->types) && is_array($all_mb->types) ) {			
+			$all_mb->types[] = $AdvancedContentTemplates->post_type;
 		}
 	}
 }
