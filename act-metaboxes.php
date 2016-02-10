@@ -2,10 +2,11 @@
 /*
 Plugin Name: ACT Metaboxes
 Plugin URI: http://cgd.io/
-Description:  Adds metaboxes from other post types to ACT templates. 
-Version: 1.1.0
+Description:  Adds metaboxes from other post types to ACT templates.
+Version: 1.1.1
 Author: CGD Inc.
 Author URI: http://cgd.io
+GitHub Plugin URI: https://github.com/clifgriffin/ACT-Metaboxes
 
 ------------------------------------------------------------------------
 Copyright 2013-2015 Clif Griffin Development Inc.
@@ -29,34 +30,34 @@ class ACT_Metaboxes {
 	public function __construct() {
 		add_action('act_loaded', array($this, 'init') );
 	}
-	
+
 	function init() {
 		global $AdvancedContentTemplates;
-		
-		// Add metaboxes 
+
+		// Add metaboxes
 		add_action('add_meta_boxes' . $AdvancedContentTemplates->post_type, array($this, 'glue_act_metaboxes'), 1000 );
-		
-		
+
+
 		/**
-		 * Esoteric compatibility patches 
+		 * Esoteric compatibility patches
 		 */
 		$this->compatibility_magic();
 	}
-	
+
 	function glue_act_metaboxes() {
 		global $wp_meta_boxes, $AdvancedContentTemplates;
-		
-		// Force Metaboxes to Populate 
+
+		// Force Metaboxes to Populate
 		do_action( 'add_meta_boxes_post');
-		
+
 		$act_screen = convert_to_screen( $AdvancedContentTemplates->post_type );
-		$post_screen = convert_to_screen( 'post' ); 
+		$post_screen = convert_to_screen( 'post' );
 
 		foreach($wp_meta_boxes[$post_screen->id] as $priority => $boxes) {
 			foreach ( $boxes as $position => $mboxes ) {
 				$wp_meta_boxes[$act_screen->id][$priority][$position] = (array)$wp_meta_boxes[$act_screen->id][$priority][$position];
 				$wp_meta_boxes[$act_screen->id][$priority][$position] = array_merge($wp_meta_boxes[$act_screen->id][$priority][$position], $mboxes);
-				
+
 				// Remove our own metaboxes
 				if ( isset( $wp_meta_boxes[$act_screen->id][$priority][$position]['act_side_car'] ) ) {
 					unset($wp_meta_boxes[$act_screen->id][$priority][$position]['act_side_car']);
@@ -64,21 +65,21 @@ class ACT_Metaboxes {
 			}
 		}
 	}
-	
+
 	function compatibility_magic() {
 		$current_theme = wp_get_theme();
-		
-		
+
+
 		// Studiofolio Theme
 		if ( $current_theme->get('Name') == 'Studiofolio' ) {
-			add_action('admin_init', array($this, 'studiofolio_fix') , 0); 
+			add_action('admin_init', array($this, 'studiofolio_fix') , 0);
 		}
 	}
-	
+
 	function studiofolio_fix() {
 		global $all_mb, $AdvancedContentTemplates;
-		
-		if ( isset($all_mb->types) && is_array($all_mb->types) ) {			
+
+		if ( isset($all_mb->types) && is_array($all_mb->types) ) {
 			$all_mb->types[] = $AdvancedContentTemplates->post_type;
 		}
 	}
