@@ -3,7 +3,7 @@
 Plugin Name: ACT Metaboxes
 Plugin URI: http://cgd.io/
 Description:  Adds metaboxes from other post types to ACT templates.
-Version: 1.1.1
+Version: 1.1.2
 Author: CGD Inc.
 Author URI: http://cgd.io
 GitHub Plugin URI: https://github.com/clifgriffin/ACT-Metaboxes
@@ -59,8 +59,8 @@ class ACT_Metaboxes {
 				$wp_meta_boxes[$act_screen->id][$priority][$position] = array_merge($wp_meta_boxes[$act_screen->id][$priority][$position], $mboxes);
 
 				// Remove our own metaboxes
-				if ( isset( $wp_meta_boxes[$act_screen->id][$priority][$position]['act_side_car'] ) ) {
-					unset($wp_meta_boxes[$act_screen->id][$priority][$position]['act_side_car']);
+				if ( isset( $wp_meta_boxes[$act_screen->id][$priority][$position]['act_side_car_post'] ) ) {
+					unset($wp_meta_boxes[$act_screen->id][$priority][$position]['act_side_car_post']);
 				}
 			}
 		}
