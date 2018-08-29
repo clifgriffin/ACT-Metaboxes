@@ -28,15 +28,14 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
 class ACT_Metaboxes {
 	public function __construct() {
-		add_action('act_loaded', array($this, 'init') );
+		add_action( 'act_loaded', array( $this, 'init' ) );
 	}
 
 	function init() {
 		global $AdvancedContentTemplates;
 
 		// Add metaboxes
-		add_action('add_meta_boxes' . $AdvancedContentTemplates->post_type, array($this, 'glue_act_metaboxes'), 1000 );
-
+		add_action( 'add_meta_boxes' . $AdvancedContentTemplates->post_type, array( $this, 'glue_act_metaboxes' ), 1000 );
 
 		/**
 		 * Esoteric compatibility patches
@@ -48,19 +47,19 @@ class ACT_Metaboxes {
 		global $wp_meta_boxes, $AdvancedContentTemplates;
 
 		// Force Metaboxes to Populate
-		do_action( 'add_meta_boxes_post');
+		do_action( 'add_meta_boxes_post' );
 
-		$act_screen = convert_to_screen( $AdvancedContentTemplates->post_type );
+		$act_screen  = convert_to_screen( $AdvancedContentTemplates->post_type );
 		$post_screen = convert_to_screen( 'post' );
 
-		foreach($wp_meta_boxes[$post_screen->id] as $priority => $boxes) {
+		foreach ( $wp_meta_boxes[ $post_screen->id ] as $priority => $boxes ) {
 			foreach ( $boxes as $position => $mboxes ) {
-				$wp_meta_boxes[$act_screen->id][$priority][$position] = (array)$wp_meta_boxes[$act_screen->id][$priority][$position];
-				$wp_meta_boxes[$act_screen->id][$priority][$position] = array_merge($wp_meta_boxes[$act_screen->id][$priority][$position], $mboxes);
+				$wp_meta_boxes[ $act_screen->id ][ $priority ][ $position ] = (array) $wp_meta_boxes[ $act_screen->id ][ $priority ][ $position ];
+				$wp_meta_boxes[ $act_screen->id ][ $priority ][ $position ] = array_merge( $wp_meta_boxes[ $act_screen->id ][ $priority ][ $position ], $mboxes );
 
 				// Remove our own metaboxes
-				if ( isset( $wp_meta_boxes[$act_screen->id][$priority][$position]['act_side_car_post'] ) ) {
-					unset($wp_meta_boxes[$act_screen->id][$priority][$position]['act_side_car_post']);
+				if ( isset( $wp_meta_boxes[ $act_screen->id ][ $priority ][ $position ]['act_side_car_post'] ) ) {
+					unset( $wp_meta_boxes[ $act_screen->id ][ $priority ][ $position ]['act_side_car_post'] );
 				}
 			}
 		}
@@ -69,17 +68,16 @@ class ACT_Metaboxes {
 	function compatibility_magic() {
 		$current_theme = wp_get_theme();
 
-
 		// Studiofolio Theme
-		if ( $current_theme->get('Name') == 'Studiofolio' ) {
-			add_action('admin_init', array($this, 'studiofolio_fix') , 0);
+		if ( $current_theme->get( 'Name' ) == 'Studiofolio' ) {
+			add_action( 'admin_init', array( $this, 'studiofolio_fix' ), 0 );
 		}
 	}
 
 	function studiofolio_fix() {
 		global $all_mb, $AdvancedContentTemplates;
 
-		if ( isset($all_mb->types) && is_array($all_mb->types) ) {
+		if ( isset( $all_mb->types ) && is_array( $all_mb->types ) ) {
 			$all_mb->types[] = $AdvancedContentTemplates->post_type;
 		}
 	}
