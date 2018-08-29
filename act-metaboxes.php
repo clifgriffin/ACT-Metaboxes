@@ -32,10 +32,10 @@ class ACT_Metaboxes {
 	}
 
 	function init() {
-		global $AdvancedContentTemplates;
+		global $Advanced_Content_Templates;
 
 		// Add metaboxes
-		add_action( 'add_meta_boxes' . $AdvancedContentTemplates->post_type, array( $this, 'glue_act_metaboxes' ), 1000 );
+		add_action( 'add_meta_boxes' . $Advanced_Content_Templates->post_type, array( $this, 'glue_act_metaboxes' ), 1000 );
 
 		/**
 		 * Esoteric compatibility patches
@@ -44,12 +44,12 @@ class ACT_Metaboxes {
 	}
 
 	function glue_act_metaboxes() {
-		global $wp_meta_boxes, $AdvancedContentTemplates;
+		global $wp_meta_boxes, $Advanced_Content_Templates;
 
 		// Force Metaboxes to Populate
 		do_action( 'add_meta_boxes_post' );
 
-		$act_screen  = convert_to_screen( $AdvancedContentTemplates->post_type );
+		$act_screen  = convert_to_screen( $Advanced_Content_Templates->post_type );
 		$post_screen = convert_to_screen( 'post' );
 
 		foreach ( $wp_meta_boxes[ $post_screen->id ] as $priority => $boxes ) {
@@ -75,10 +75,10 @@ class ACT_Metaboxes {
 	}
 
 	function studiofolio_fix() {
-		global $all_mb, $AdvancedContentTemplates;
+		global $all_mb, $Advanced_Content_Templates;
 
 		if ( isset( $all_mb->types ) && is_array( $all_mb->types ) ) {
-			$all_mb->types[] = $AdvancedContentTemplates->post_type;
+			$all_mb->types[] = $Advanced_Content_Templates->post_type;
 		}
 	}
 }
