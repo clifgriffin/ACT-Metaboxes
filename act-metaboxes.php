@@ -5,7 +5,7 @@ Plugin URI: http://cgd.io/
 Description:  Adds metaboxes from other post types to ACT templates.
 Version: 1.1.3
 Author: CGD Inc.
-Author URI: http://cgd.io
+Author URI: http://objectiv.co
 GitHub URI:: https://github.com/clifgriffin/ACT-Metaboxes
 
 ------------------------------------------------------------------------
