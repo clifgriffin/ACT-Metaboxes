@@ -72,6 +72,18 @@ class ACT_Metaboxes {
 		if ( $current_theme->get( 'Name' ) == 'Studiofolio' ) {
 			add_action( 'admin_init', array( $this, 'studiofolio_fix' ), 0 );
 		}
+
+		// Fix for WPSEO not showing on our private custom post type
+		if ( class_exists( 'WPSEO_Options' ) ) {
+			add_filter(
+				'wpseo_accessible_post_types', function( $post_types ) {
+					$post_types[] = 'act_template';
+
+					return $post_types;
+				}
+			);
+		}
+
 	}
 
 	function studiofolio_fix() {
