@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: ACT Metaboxes
-Plugin URI: http://cgd.io/
+Plugin URI: https://www.advancedcontenttemplates.com/
 Description:  Adds metaboxes from other post types to ACT templates.
-Version: 1.1.4
+Version: 1.1.5
 Author: CGD Inc.
-Author URI: http://objectiv.co
+Author URI: https://objectiv.co
 GitHub URI:: https://github.com/clifgriffin/ACT-Metaboxes
 
 ------------------------------------------------------------------------
@@ -35,7 +35,7 @@ class ACT_Metaboxes {
 		global $Advanced_Content_Templates;
 
 		// Add metaboxes
-		add_action( 'add_meta_boxes' . $Advanced_Content_Templates->post_type, array( $this, 'glue_act_metaboxes' ), 1000 );
+		add_action( 'add_meta_boxes_' . $Advanced_Content_Templates->post_type, array( $this, 'glue_act_metaboxes' ), 1000 );
 
 		/**
 		 * Esoteric compatibility patches
