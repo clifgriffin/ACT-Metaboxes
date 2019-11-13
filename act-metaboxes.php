@@ -74,7 +74,7 @@ class ACT_Metaboxes {
 		}
 
 		// Fix for WPSEO not showing on our private custom post type
-		if ( class_exists( 'WPSEO_Options' ) ) {
+		if ( in_array( 'wordpress-seo/wp-seo.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
 			add_filter(
 				'wpseo_accessible_post_types', function( $post_types ) {
 					$post_types[] = 'act_template';
