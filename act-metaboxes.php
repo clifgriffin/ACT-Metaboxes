@@ -73,8 +73,11 @@ class ACT_Metaboxes {
 			add_action( 'admin_init', array( $this, 'studiofolio_fix' ), 0 );
 		}
 
+		// Get all active plugins
+		$active_plugins = apply_filters( 'active_plugins', get_option( 'active_plugins' ) );
+
 		// Fix for WPSEO not showing on our private custom post type
-		if ( in_array( 'wordpress-seo/wp-seo.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+		if ( in_array( 'wordpress-seo/wp-seo.php', $active_plugins ) || in_array( 'wordpress-seo-premium/wp-seo-premium.php', $active_plugins ) ) {
 			add_filter(
 				'wpseo_accessible_post_types', function( $post_types ) {
 					$post_types[] = 'act_template';
