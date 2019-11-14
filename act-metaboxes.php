@@ -3,7 +3,7 @@
 Plugin Name: ACT Metaboxes
 Plugin URI: https://www.advancedcontenttemplates.com/
 Description:  Adds metaboxes from other post types to ACT templates.
-Version: 1.1.6
+Version: 1.1.7
 Author: CGD Inc.
 Author URI: https://objectiv.co
 GitHub URI:: https://github.com/clifgriffin/ACT-Metaboxes
