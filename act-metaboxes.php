@@ -1,15 +1,15 @@
 <?php
 /*
 Plugin Name: ACT Metaboxes
-Plugin URI: http://cgd.io/
+Plugin URI: https://www.advancedcontenttemplates.com/
 Description:  Adds metaboxes from other post types to ACT templates.
-Version: 1.1.4
+Version: 1.1.7
 Author: CGD Inc.
-Author URI: http://objectiv.co
+Author URI: https://objectiv.co
 GitHub URI:: https://github.com/clifgriffin/ACT-Metaboxes
 
 ------------------------------------------------------------------------
-Copyright 2013-2015 Clif Griffin Development Inc.
+Copyright 2013-2019 Clif Griffin Development Inc.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ class ACT_Metaboxes {
 		global $Advanced_Content_Templates;
 
 		// Add metaboxes
-		add_action( 'add_meta_boxes' . $Advanced_Content_Templates->post_type, array( $this, 'glue_act_metaboxes' ), 1000 );
+		add_action( 'add_meta_boxes_' . $Advanced_Content_Templates->post_type, array( $this, 'glue_act_metaboxes' ), 1000 );
 
 		/**
 		 * Esoteric compatibility patches
@@ -72,6 +72,21 @@ class ACT_Metaboxes {
 		if ( $current_theme->get( 'Name' ) == 'Studiofolio' ) {
 			add_action( 'admin_init', array( $this, 'studiofolio_fix' ), 0 );
 		}
+
+		// Get all active plugins
+		$active_plugins = apply_filters( 'active_plugins', get_option( 'active_plugins' ) );
+
+		// Fix for WPSEO not showing on our private custom post type
+		if ( in_array( 'wordpress-seo/wp-seo.php', $active_plugins ) || in_array( 'wordpress-seo-premium/wp-seo-premium.php', $active_plugins ) ) {
+			add_filter(
+				'wpseo_accessible_post_types', function( $post_types ) {
+					$post_types[] = 'act_template';
+
+					return $post_types;
+				}
+			);
+		}
+
 	}
 
 	function studiofolio_fix() {
